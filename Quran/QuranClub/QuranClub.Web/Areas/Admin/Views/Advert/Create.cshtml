@@ -1,0 +1,180 @@
+﻿@model QuranClub.Domain.Entities.Advert
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<environment names="development">
+    <!-- Theme JS files -->
+    <script>
+    </script>
+    <script type="text/javascript" src="~/assets/js/plugins/forms/validation/validate.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+    <script type="text/javascript" src="~/assets/js/plugins/forms/inputs/touchspin.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/plugins/forms/styling/switch.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/plugins/forms/styling/switchery.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/plugins/forms/styling/uniform.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/core/app.js"></script>
+    <script type="text/javascript" src="~/assets/js/pages/form_multiselect.js"></script>
+    <script type="text/javascript" src="~/assets/js/pages/form_validation.js"></script>
+    <script src="~/js/Advert.js"></script>
+    <!-- /theme JS files -->
+</environment>
+@{
+    var pageaction = "Create";
+
+    if (ViewBag.IsEdit != "IsUpdate")
+    {
+        pageaction = "Create";
+    }
+    else
+    {
+        pageaction = "Edit";
+
+    }
+}
+
+<div class="page-header page-header-default">
+    <div class="page-header-content">
+        <div class="page-title">
+            <h4><span class="text-semibold">Create</span> - Advert</h4>
+        </div>
+    </div>
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a asp-Controller="dashboard" asp-action="Index"><i class="icon-home2 position-left"></i> Home</a></li>
+            <li><a asp-Controller="Advert" asp-action="Create">Advert</a></li>
+            <li class="active">Create Advert</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Form validation -->
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h5 class="panel-title">Create Advert</h5>
+        <div class="heading-elements">
+            <ul class="icons-list">
+                <li><a data-action="collapse"></a></li>
+                <li><a data-action="reload"></a></li>
+                <li><a data-action="close"></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal form-validate-jquery" data-ajax="true" data-ajax-method="POST" asp-action="@pageaction" asp-controller="Advert">
+            <fieldset class="content-group">
+                <!-- Basic text input -->
+                <div class="form-group">
+                    <label class="control-label col-lg-3">Title <span class="text-danger">*</span></label>
+                    <div class="col-lg-9">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" name="page" asp-for="page">
+                        <input type="text" name="Title" class="form-control" asp-for="Title"  placeholder="Title">
+                        <span class="validation-error-label" asp-validation-for="Title"></span>
+                    </div>
+                </div>
+                <!-- Basic text input -->
+                <div class="form-group">
+                    <label class="control-label col-lg-3">Media Url <span class="text-danger">*</span></label>
+                    <div class="col-lg-9">
+                        <input type="text" name="MediaUrl" class="form-control" asp-for="MediaUrl" placeholder="Media Url">
+                        <span class="validation-error-label" asp-validation-for="MediaUrl"></span>
+                     </div>
+                </div>
+                <!-- Basic text input -->
+                <div class="form-group">
+                    <label class="control-label col-lg-3">Media <span class="text-danger">*</span></label>
+                    <div class="col-lg-9">
+                        <select asp-for="MediaTypeId"
+                                class="form-control"
+                                asp-items="@(new SelectList(Model.Media,"Id", "Type"))"></select>
+                    </div>
+                </div>
+                <!-- Basic text input -->
+                <div class="form-group">
+                    <label class="control-label col-lg-3">Daily Quota<span class="text-danger">*</span></label>
+                    <div class="col-lg-9">
+                        <input type="text" name="DailyQuota" class="form-control" asp-for="DailyQuota" placeholder="Daily Quota">
+                        <span class="validation-error-label" asp-validation-for="DailyQuota"></span>
+                     </div>
+                </div>
+                <!-- Basic text input -->
+                <div class="form-group">
+                    <label class="control-label col-lg-3">Total Amount <span class="text-danger">*</span></label>
+                    <div class="col-lg-9">
+                        <input type="text" name="TotalAmount" class="form-control" id="TotalAmount" asp-for="TotalAmount" placeholder="Total Amount in numbers">
+                        <span class="validation-error-label" asp-validation-for="TotalAmount"></span>
+                    </div>
+                </div>
+                <!-- Basic text input -->
+                <div class="form-group">
+                    <label class="control-label col-lg-3">Payment Status<span class="text-danger">*</span></label>
+                    <div class="col-lg-9">
+                        <input type="text" name="PaymentStaus" class="form-control" id="PaymentStaus" asp-for="PaymentStaus"  placeholder="Payment Status 0 or 1">
+                        <span class="validation-error-label" asp-validation-for="PaymentStaus"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-3">Countries<span class="text-danger">*</span></label>
+                    <div class="col-lg-9">
+                        <div class="multi-select-full">
+                            <select class="form-control multiselect-filtering" multiple="multiple" 
+                                    asp-items="@(new SelectList(Model.Country,"Id", "CountryName"))" id="drpAdvretCountries"></select>
+                            <input type="hidden" asp-for="Countries" id="hdnAdvretCountries" />
+                            <span class="validation-error-label" asp-validation-for="Countries"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-3">Cities<span class="text-danger">*</span></label>
+                    <div class="col-lg-9">
+                        <div class="multi-select-full">
+                            <select class="multiselect" multiple="multiple" id="drpcities"></select>
+                            <span class="validation-error-label" asp-validation-for="Cities"></span>
+                          </div>
+                        <input type="hidden" asp-for="Cities" id="hdnAdvretCities" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-3">Languages<span class="text-danger">*</span></label>
+                    <div class="col-lg-9">
+                        <div class="multi-select-full">
+                            <select class="form-control multiselect-filtering" multiple="multiple" 
+                                    asp-items="@(new SelectList(Model.Language,"Id", "Language"))" id="drpAdvretLanguages"></select>
+                            <input type="hidden" asp-for="Languages" id="hdnAdvretLanguages" />
+                            <span class="validation-error-label" asp-validation-for="Languages"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+            <div class="text-right">
+                <button type="reset" class="btn btn-default" id="reset">Reset <i class="icon-reload-alt position-right"></i></button>
+                <button type="submit" value="Submit" class="btn btn-primary">Submit <i class="icon-arrow-right14 position-right"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- /form validation -->
+
+<script>
+    $(function () {
+        $("#drpAdvretCountries").next("div").on("hide.bs.dropdown", function (event) {
+            Dropdownchange(this, '@Url.Action("GetCities","Advert")', '#drpcities')
+        });
+        if ($("#hdnAdvretCountries").val() != '') {
+            var countries = $("#hdnAdvretCountries").val().split(",")
+            $.each(countries, function (key, value) {
+                $("#drpAdvretCountries").next("div").find("ul.multiselect-container li").each(function (index) {
+                    var checkboxVal = $(this).find("a label.checkbox .checker input[type=checkbox]").val()
+                    if (checkboxVal == value) {
+                        $(this).addClass("active");
+                        $(this).find("a label.checkbox .checker input[type=checkbox]").click();
+                    }
+                });
+            })
+            Dropdownchange(this, '@Url.Action("GetCities","Advert")', '#drpcities')
+        }
+    })
+</script>

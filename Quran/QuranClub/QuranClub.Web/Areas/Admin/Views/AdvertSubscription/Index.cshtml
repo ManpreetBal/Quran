@@ -1,0 +1,130 @@
+﻿@model cloudscribe.Web.Pagination.IPagedList<QuranClub.Domain.Entities.AdvertSubscription>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper "*, cloudscribe.Web.Pagination"
+<environment names="Development">
+    <!-- Theme JS files -->
+    <script type="text/javascript" src="~/assets/js/core/app.js"></script>
+    <!-- /theme JS files -->
+</environment>
+<!-- Page header -->
+<div class="page-header page-header-default">
+    <div class="page-header-content">
+        <div class="page-title">
+            <h4><span class="text-semibold">Manage</span> - Advert Subscription</h4>
+        </div>
+    </div>
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a asp-Controller="dashboard" asp-action="Index"><i class="icon-home2 position-left"></i> Home</a></li>
+            <li><a asp-Controller="AdvertSubscription" asp-action="Index">Advert Subscription</a></li>
+            <li class="active">Manage Advert Subscriptions</li>
+        </ul>
+    </div>
+</div>
+<!-- /page header -->
+<!-- Page length options -->
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h5 class="panel-title">Manage Advert Subscriptions</h5>
+        <form asp-action="Index" method="get">
+            <fieldset class="content-group">
+                <div class="col-md-12">
+                    <div class="col-md-9">
+                        <div class="form-actions no-color">
+                            <p class="top-center">
+                                <input type="hidden" name="page" value="@Model.PageIndex" />
+                                <label class="control-label col-md-2">  Find by Tier:</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="search" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                                    <button type="submit" id="btnSearch" value="Search" class="btn btn-primary">Search <i class="icon-arrow-right14 position-right"></i></button>
+                                    <a asp-action="Index" class="btn btn-default"><i class="icon-arrow-left16 position-left"></i>Back to List</a>
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-actions no-color">
+                            <p class="top-center">
+                                <label class="control-label col-md-3">Show:</label>
+                                <div class="col-md-9">
+                                    <select name="pageSize" class="form-control" asp-for="@Model.PageSize" onchange="return pagevalue()">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <table class="table datatable-show-all">
+        <thead class="bg-teal-400">
+            <tr>
+                <th><a asp-action="Index" style="color:white; text-decoration:underline;" asp-route-sortOrder="@ViewData["TierSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Tier</a></th>
+                <th><a asp-action="Index" style="color:white; text-decoration:underline;" asp-route-sortOrder="@ViewData["VideoRateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Video Rate</a></th>
+                <th><a asp-action="Index" style="color:white; text-decoration:underline;" asp-route-sortOrder="@ViewData["VideoTotalSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Video Total</a></th>
+                <th><a asp-action="Index" style="color:white; text-decoration:underline;" asp-route-sortOrder="@ViewData["ImageRateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Image Rate</a></th>
+                <th><a asp-action="Index" style="color:white; text-decoration:underline;" asp-route-sortOrder="@ViewData["ImageTotalSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Image Total</a></th>
+                <th><a asp-action="Index" style="color:white; text-decoration:underline;" asp-route-sortOrder="@ViewData["PerClickSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">PerClick</a></th>
+                <th><a asp-action="Index" style="color:white; text-decoration:underline;" asp-route-sortOrder="@ViewData["PercentageToCharitySortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Percentage To Charity</a></th>
+                <th class="text-center no-sort">Edit/Delete </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Tier</td>
+                    <td>@item.VideoRate</td>
+                    <td>@item.VideoTotal</td>
+                    <td>@item.ImageRate</td>
+                    <td>@item.ImageTotal</td>
+                    <td>@item.PerClick</td>
+                    <td>@item.PercentageToCharity</td>
+                    <td>
+                        <ul class="icons-list text-center">
+                            <li class="text-primary-600"><a asp-action="Edit" name="page" asp-route-page="@Model.PageIndex" asp-controller="AdvertSubscription" asp-route-Id="@item.Id" title="Click here to edit"><i class="icon-pencil7"></i></a></li>
+                            <li class="text-danger-600"><a asp-action="Delete" asp-controller="AdvertSubscription" asp-route-Id="@item.Id" title="Click here to delete" onclick="return confirm('Are you sure you want to delete?') "><i class="icon-trash"></i></a></li>
+                        </ul>
+                    </td>
+                </tr>
+
+            }
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td><p class="text-danger-600">No record found</p></td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    @if (Model.Count() > 0)
+    {
+        <cs-pager cs-paging-pagesize="@Model.PageSize"
+                  cs-paging-pagenumber="@Model.PageIndex"
+                  cs-paging-totalitems="@Model.TotalItemCount"
+                  cs-pagenumber-param="page"
+                  asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                  asp-route-sortOrder="@ViewData["CurrentSort"]"
+                  asp-controller="AdvertSubscription"
+                  asp-action="Index"></cs-pager>
+    }
+    <button type="button" class="btn btn-success btn-sm noty-runner" style="display:none" id="btnsuccess" data-layout="topRight" data-type="success">Launch <i class="icon-play3 position-right"></i></button>
+</div>
+<script>
+    $(function () {
+        if ("@TempData["Message"]" == "IsMessage") {
+            $("#btnsuccess").click();
+        }
+    });
+</script>
+<!-- /page length options -->

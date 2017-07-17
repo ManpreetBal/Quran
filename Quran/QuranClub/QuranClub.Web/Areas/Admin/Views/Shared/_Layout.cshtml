@@ -1,0 +1,184 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<QuranClub.Domain.Entities.ApplicationUser> SignInManager
+@inject UserManager<QuranClub.Domain.Entities.ApplicationUser> UserManager
+<!DOCTYPE html>
+@addTagHelper "*,Microsoft.AspNetCore.Mvc.TagHelpers"
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    <!-- Global stylesheets -->
+    <environment names="Development">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+        <link href="~/assets/css/icons/icomoon/styles.css" rel="stylesheet" />
+        <link href="~/assets/css/icons/icomoon/styles.css" rel="stylesheet" />
+        <link href="~/assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="~/assets/css/core.css" rel="stylesheet" type="text/css">
+        <link href="~/assets/css/components.css" rel="stylesheet" type="text/css">
+        <link href="~/assets/css/colors.css" rel="stylesheet" type="text/css">
+        <link href="~/assets/css/Admin.css" rel="stylesheet" />
+        <!-- /global stylesheets -->
+        <!-- Core JS files -->
+        <script type="text/javascript" src="~/assets/js/plugins/loaders/pace.min.js"></script>
+        <script type="text/javascript" src="~/assets/js/core/libraries/jquery.min.js"></script>
+        <script type="text/javascript" src="~/assets/js/core/libraries/bootstrap.min.js"></script>
+        <script type="text/javascript" src="~/assets/js/plugins/loaders/blockui.min.js"></script>
+        <script src="~/js/QuranAdmin.js"></script>
+        <script type="text/javascript" src="~/assets/js/plugins/notifications/pnotify.min.js"></script>
+        <script type="text/javascript" src="~/assets/js/plugins/notifications/noty.min.js"></script>
+        <script type="text/javascript" src="~/assets/js/plugins/notifications/jgrowl.min.js"></script>
+        <script type="text/javascript" src="~/assets/js/pages/components_notifications_other.js"></script>
+        
+
+        <!-- /core JS files -->
+    </environment>
+</head>
+
+<body>
+    <!-- Main navbar -->
+    <div class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <a asp-Controller="Dashboard" asp-action="Index" class="navbar-brand">Quran Club</a>
+            <ul class="nav navbar-nav visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+                <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown dropdown-user">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="~/assets/images/placeholder.jpg" alt="">
+                        <span>Welcome</span>
+                        <i class="caret"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a asp-Controller="Login" asp-action="Logout"><i class="icon-switch2"></i> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /main navbar -->
+    <!-- Page container -->
+    <div class="page-container">
+        <!-- Page content -->
+        <div class="page-content">
+            <!-- Main sidebar -->
+            <div class="sidebar sidebar-main">
+                <div class="sidebar-content">
+                    <!-- User menu -->
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        var users = await UserManager.GetUserAsync(User);
+                        <div class="sidebar-user">
+                            <div class="category-content">
+                                <div class="media">
+                                    <a href="#" class="media-left"><img src="~/assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></a>
+                                    <div class="media-body">
+                                        <span class="media-heading text-semibold">@users.UserName</span>
+                                        <div class="text-size-mini text-muted">
+                                            <i class="icon-pin text-size-small"></i> &nbsp;@users.Address
+                                        </div>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <ul class="icons-list">
+                                            <li>
+                                                <a href="#"><i class="icon-cog3"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <!-- /user menu -->
+                    <!-- Main navigation -->
+                    <div class="sidebar-category sidebar-category-visible">
+                        <div class="category-content no-padding">
+                            <ul class="navigation navigation-main navigation-accordion">
+                                <!-- Main -->
+                                @*<li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>*@
+                                <li id="lidashboard"><a asp-controller="Dashboard" asp-action="Index"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+                                <li id="liuser">
+                                    <a href="#"><i class="icon-person"></i> <span>Users</span></a>
+                                    <ul>
+                                        <li id="limanageusers"><a asp-controller="User" asp-action="Index"> Manage Users</a></li>
+
+                                    </ul>
+                                </li>
+                                <li id="ligroups">
+                                    <a href="#"><i class="icon-people"></i> <span>Groups</span></a>
+                                    <ul>
+                                        <li id="limanagegroups"><a asp-action="Index" asp-controller="Group">Manage Groups</a></li>
+                                    </ul>
+                                </li>
+                                <li id="liCharity">
+                                    <a href="#"><i class="icon-coin-dollar"></i> <span>Charity</span></a>
+                                    <ul>
+                                        <li id="licreatecharity"><a asp-action="Create" asp-controller="Charity">Create Charity</a></li>
+                                        <li id="limanagecharity"><a asp-action="Index" asp-controller="Charity">Manage Charity</a></li>
+
+                                    </ul>
+                                </li>
+                                <li id="liCause">
+                                    <a href="#"><i class="icon-search4"></i> <span>Cause</span></a>
+                                    <ul>
+                                        <li id="licreatecause"><a asp-action="Create" asp-controller="Cause">Create Cause</a></li>
+                                        <li id="limanagecause"><a asp-action="Index" asp-controller="Cause">Manage Cause</a></li>
+
+                                    </ul>
+                                </li>
+                                <li id="liAdvertSubscription">
+                                    <a href="#"><i class="icon-briefcase"></i> <span>Advert Subscription</span></a>
+                                    <ul>
+                                        <li id="licreateadvertsubscription"><a asp-action="Create" asp-controller="AdvertSubscription">Create Advert Subscription</a></li>
+                                        <li id="limanageadvertsubscription"><a asp-action="Index" asp-controller="AdvertSubscription">Manage Advert Subscription</a></li>
+
+                                    </ul>
+                                </li>
+                                <li id="liAdvert">
+                                    <a href="#"><i class="icon-tv"></i> <span>Advert</span></a>
+                                    <ul>
+                                        <li id="licreateadvert"><a asp-action="Create" asp-controller="Advert">Create Advert</a></li>
+                                        <li id="limanageadverts"><a asp-action="Index" asp-controller="Advert">Manage Advert</a></li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /main navigation -->
+                </div>
+            </div>
+            <!-- /main sidebar -->
+            <!-- Main content -->
+            <div class="content-wrapper">
+                <!-- Page header -->
+                <!-- /page header -->
+                <!-- Content Areas -->
+                <div class="content">
+                    <!-- Main charts -->
+                    @RenderBody()
+                    <!-- Footer -->
+                    <div class="footer text-muted">
+                        &copy; 2017 Quran Club <a href="#"></a> by <a href="http://www.hashsoftware.com/" target="_blank">Hash Softwares</a>
+                    </div>
+                    <!-- /footer -->
+                </div>
+                <!-- /content Areas -->
+            </div>
+            <!-- /main content -->
+        </div>
+        <!-- /page content -->
+    </div>
+    <!-- /page container -->
+    <div id="LoadingElementId" style="display:none;">              
+        <img src="@Url.Content("~/assets/images/spin.gif")" alt="" />
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

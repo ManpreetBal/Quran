@@ -1,0 +1,5 @@
+#:D:\Quran\QuranClub\QuranClub\QuranClub.Web\QuranClub.Web.xproj
+D:\Quran\QuranClub\QuranClub\QuranClub.Web\QuranClub.Web.xproj|D:\Quran\QuranClub\QuranClub\QuranClub.Core\QuranClub.Core.xproj
+D:\Quran\QuranClub\QuranClub\QuranClub.Core\QuranClub.Core.xproj|D:\Quran\QuranClub\QuranClub\QuranClub.Domain\QuranClub.Domain.xproj
+D:\Quran\QuranClub\QuranClub\QuranClub.Core\QuranClub.Core.xproj|D:\Quran\QuranClub\QuranClub\QuranClub.Repository\QuranClub.Repository.xproj
+D:\Quran\QuranClub\QuranClub\QuranClub.Repository\QuranClub.Repository.xproj|D:\Quran\QuranClub\QuranClub\QuranClub.Domain\QuranClub.Domain.xproj

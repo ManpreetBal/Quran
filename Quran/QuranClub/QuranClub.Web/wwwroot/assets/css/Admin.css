@@ -1,0 +1,81 @@
+﻿div#LoadingElementId {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    float: none;
+    margin: auto;
+    text-align: center;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.20) none repeat scroll 0 0;
+}
+
+    div#LoadingElementId img {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+.imageName {
+    height: 50px;
+    width: 50px;
+}
+
+.search {
+    width: 33%;
+    margin: 0px;
+    border: 1px solid #ddd;
+    padding: 7px 12px;
+    font-size: 13px;
+    line-height: 1.5384616;
+    color: #333333;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 3px;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    z-index: 3;
+    color: #fff;
+    background-color: #26A69A;
+    border-color: #26A69A;
+    cursor: default;
+}
+
+@media screen and (max-width: 992px) {
+    table.table.datatable-show-all td {
+        padding: 4px;
+    }
+}
+@media screen and (max-width: 640px) {
+    table.table.datatable-show-all {
+        overflow-x: auto;
+        display: block;
+        max-height: 300px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .search {
+        width: 100%;
+        margin: 0px;
+        border: 1px solid #ddd;
+        padding: 7px 12px;
+        font-size: 13px;
+        line-height: 1.5384616;
+        color: #333333;
+        margin-bottom: 10px;
+        background-color: #fff;
+        background-image: none;
+        border-radius: 3px;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+
+    button#btnSearch {
+        margin-bottom: 10px;
+    }
+}
